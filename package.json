@@ -39,5 +39,19 @@
         "tsConfig": "./src/client/tsconfig.json"
       }
     }
-  }
+  },
+  "license": "MIT",
+  "contributors": [
+    "Khang Dinh <thesephi@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Thesephi/fullstack-typescript-webapp-starter"
+  },
+  "keywords": [
+    "React",
+    "Node.js",
+    "web app",
+    "boilerplate"
+  ]
 }
