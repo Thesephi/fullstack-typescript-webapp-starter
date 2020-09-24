@@ -1,5 +1,7 @@
 # Database-agnostic React-based full-stack web application starter boilerplate
 
+[![Build Status](https://travis-ci.com/Thesephi/fullstack-typescript-webapp-starter.svg?branch=master)](https://travis-ci.com/Thesephi/fullstack-typescript-webapp-starter)
+
 This is an opinionated web app boilerplate that makes use of:
 - [React](https://reactjs.org/) on the client-side
 - [Somnus](https://github.com/somnusjs/somnus) on the server-side
@@ -52,8 +54,7 @@ npm test
 ## Caveats / TODOs
 
 - Source mapping doesn't work yet for the server app, and thus JS error logs are not pointing to the desirable line/column in the .ts files
-- Hot live-reloading is not enabled for client-side assets yet
+- Hot (live) reloading is not enabled for client-side assets yet
 - The build is not yet optimized (output sizes larger than they could be in real production setups)
-- There is no example test suite for the backend part (REST endpoints)
+- There is no example test suite yet for the backend part (REST endpoints)
 - The dev flow (build/start) was not tested on platforms other than MacOS
-- A CI flow (or at least an example of which) is not yet integrated

@@ -4,6 +4,7 @@
 - `npm start` will now start the build under production mode, to make it seamlessly compatible with platforms such as Heroku
 - metadata (updated repository keywords)
 - README content
+- Travis CI integration
 
 ### Added
 - `npm run start-dev` will now behave as the old `npm start`
