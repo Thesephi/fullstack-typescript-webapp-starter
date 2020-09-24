@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "node"
+  - "lts/*"
+  - "10.14.2"
+
+install:
+  - npm ci
+  
+# cache is [enabled by default](https://docs.travis-ci.com/user/languages/javascript-with-nodejs/#caching-with-npm)
+# now, esp if we use `npm ci` as the default install script (see above)

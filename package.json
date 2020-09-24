@@ -1,13 +1,15 @@
 {
   "name": "fullstack-typescript-webapp-starter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A db-agnostic, React-based web application starter boilerplate",
   "scripts": {
+    "postinstall": "npm run build",
     "build": "scripts/build.sh",
-    "start": "WATCH=true NODE_ENV=development scripts/start.sh",
+    "start-dev": "WATCH=true NODE_ENV=development scripts/start-dev.sh",
+    "start": "NODE_ENV=production node build/server/main.js",
     "test": "jest",
     "dev:build:fe": "webpack --config ./src/client/webpack.config.js",
-    "dev:copy": "cp -r ./src/server/view-templates ./build/server/",
+    "dev:copy:be": "cp -r ./src/server/view-templates ./build/server/",
     "dev:start": "LOG_LEVEL=info PORT=3000 node build/server/main.js"
   },
   "devDependencies": {
@@ -49,9 +51,9 @@
     "url": "https://github.com/Thesephi/fullstack-typescript-webapp-starter"
   },
   "keywords": [
-    "React",
-    "Node.js",
-    "web app",
+    "react",
+    "nodejs",
+    "webapp",
     "boilerplate"
   ]
 }
