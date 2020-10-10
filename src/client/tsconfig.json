@@ -1,6 +1,10 @@
 {
     "compilerOptions": {
         "outDir": "../../build/public/",
+        "baseUrl": ".",
+        "paths": {
+          "shared/*": ["../shared/*"]
+        },
         "sourceMap": true,
         "noImplicitAny": true,
         "module": "commonjs",

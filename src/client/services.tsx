@@ -1,13 +1,10 @@
+import { IRespPayload } from "shared/types";
+
 interface IEntry {
     firstName: string;
     lastName: string;
     email: string;
     // eventDate: Date;
-}
-
-export interface IRespPayload {
-    message: string;
-    details?: unknown;
 }
 
 export function submitEntry(entry: IEntry): Promise<IRespPayload> {

@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 import { Classes, Dialog, InputGroup, Button, Intent, H5, Callout } from "@blueprintjs/core";
-import { isValidEmail } from "./helper";
+import { isValidEmail } from "shared/utils";
 import { submitEntry } from "./services";
-import { IRespPayload } from "./services";
+import { IRespPayload } from "shared/types";
 
 const App: React.FunctionComponent = () => {
 

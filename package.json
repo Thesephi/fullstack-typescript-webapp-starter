@@ -36,6 +36,9 @@
   },
   "jest": {
     "preset": "ts-jest",
+    "moduleNameMapper": {
+      "^shared/(.*)$": "<rootDir>/src/shared/$1"
+    },
     "globals": {
       "ts-jest": {
         "tsConfig": "./src/client/tsconfig.json"

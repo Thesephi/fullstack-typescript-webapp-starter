@@ -1,5 +1,7 @@
 import { Response, Request } from "restify";
 import { promises as fs } from "fs";
+import { isValidEmail } from "shared/utils";
+import { IRespPayload } from "shared/types";
 
 const DB_NAME: string = "fullstack-react-db-agnostic-typescript-starter-example-db";
 const COLLECTION_NAME: string = "entry";
@@ -35,7 +37,7 @@ export { dbClient };
 
 export async function outputView(req: Request, res: Response, templatePath: string): Promise<void> {
     try {
-        const layout = await fs.readFile("./view-templates/index.html");
+        const layout = await fs.readFile(templatePath);
         res.sendRaw(200, layout.toString("utf-8"), {
             "Content-Type": "text/html",
             "Content-Length": String(layout.byteLength)
@@ -56,7 +58,8 @@ export async function submitEntry(req: Request, res: Response): Promise<void> {
     if (!isValidEmail(email)) errors.push("invalid `email`");
     // if (isNaN(eventDate)) errors.push("invalid `eventDate`");
     if (errors.length) {
-        return res.send(403, { message: `Invalid entry submitted`, details: { errors } });
+        const respBody: IRespPayload = { message: `Invalid entry submitted`, details: { errors } };
+        return res.send(403, respBody);
     }
 
     const col = await getDbCollection(COLLECTION_NAME);
@@ -96,10 +99,4 @@ function getDbCollection(collectionName: string): Promise<any> {
         }
 
     });
-}
-
-// @TODO share this logic between client & server codebases
-const EMAIL_REGEXP = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-function isValidEmail(input: string): boolean {
-    return EMAIL_REGEXP.test(input);
 }

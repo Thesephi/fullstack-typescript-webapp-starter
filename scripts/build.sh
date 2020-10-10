@@ -9,34 +9,54 @@ mkdir -p ./build/public/css
 THIS_DIR=`dirname $0`
 BUILD_DIR=`realpath "$THIS_DIR/../build"`
 
-export WEBPACK_OUTPUT_DIR="$BUILD_DIR/public"
-export WEBPACK_OUTPUT_FILENAME="js/main.js"
+export WEBPACK_CLIENT_APP_OUTPUT_DIR="$BUILD_DIR/public"
+export WEBPACK_CLIENT_APP_OUTPUT_FILENAME="js/main.js"
 
-export SERVER_APP="$BUILD_DIR/server/main.js"
-export CLIENT_APP="$WEBPACK_OUTPUT_DIR/$WEBPACK_OUTPUT_FILENAME"
+export WEBPACK_SERVER_APP_OUTPUT_DIR="$BUILD_DIR/server"
+export WEBPACK_SERVER_APP_OUTPUT_FILENAME="main.js"
+
+export SERVER_APP="$WEBPACK_SERVER_APP_OUTPUT_DIR/$WEBPACK_SERVER_APP_OUTPUT_FILENAME"
+export CLIENT_APP="$WEBPACK_CLIENT_APP_OUTPUT_DIR/$WEBPACK_CLIENT_APP_OUTPUT_FILENAME"
 
 # client-side
 build_client() {
+
   printf "\nbuilding for client-side...\n\n"
+
   # webpack will be under `watch` mode if WATCH=true, hence the parallel process
   { webpack --config ./src/client/webpack.config.js >&1 ; } &
+
   # cp -r ./node_modules/@blueprintjs/datetime/lib/css/* ./build/public/css/
   cp -r ./node_modules/normalize.css/normalize.css ./build/public/css/
   cp -r ./node_modules/@blueprintjs/core/lib/css/* ./build/public/css/
   cp -r ./node_modules/@blueprintjs/icons/lib/css/* ./build/public/css/
+
 }
 
 # server-side
 build_server() {
+
   printf "\nbuilding for server-side...\n\n"
+
   if [ ! -z "$WATCH" ]; then
+
+    # we now use webpack to compile server-side app to allow for more versatile
+    # module resolution (all during dev time, compile time, and run time)
+    # the following tsc command is kept for historical reasons only
     # tsc will be under `watch` mode if WATCH=true, hence the parallel process
-    { tsc -w --preserveWatchOutput -p ./src/server/ >&1 ; } &
+    # { tsc -w --preserveWatchOutput -p ./src/server/ >&1 ; } &
+
+    # webpack will be under `watch` mode if WATCH=true, hence the parallel process
+    { webpack --watch --config ./src/server/webpack.config.js >&1 ; } &
+
   else
-    tsc -p ./src/server/
+    # tsc -p ./src/server/
+    webpack --config ./src/server/webpack.config.js
   fi
+
   #TODO inject build-time vars as needed
   cp -r ./src/server/view-templates ./build/server/
+
 }
 
 # file update monitoring helper
