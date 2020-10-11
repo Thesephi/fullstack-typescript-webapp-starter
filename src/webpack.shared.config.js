@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const path = require("path");
 
 const mode = process.env.NODE_ENV || "production";
@@ -46,6 +47,12 @@ module.exports = {
         loader: "source-map-loader"
       }
     ]
-  }
+  },
+
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: mode
+    })
+  ]
 
 };

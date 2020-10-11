@@ -58,7 +58,7 @@ const App: React.FunctionComponent = () => {
     return <div>
         <Dialog
           isOpen={true}
-          title={"A db-agnostic, React-based web application starter boilerplate"}
+          title={process.env.APP_NAME}
           isCloseButtonShown={false}
           style={{ minWidth: 600 }}
         >
@@ -114,6 +114,7 @@ const App: React.FunctionComponent = () => {
                 </Callout>}
             </div>
             <div className={Classes.DIALOG_FOOTER} style={{ textAlign: "right" }}>
+                <span style={{ opacity: 0.5, marginRight: 5 }}>client env: {process.env.NODE_ENV}</span>
                 <Button type="submit" text={"Submit"} intent={Intent.PRIMARY} onClick={attemptSubmit} autoFocus />
             </div>
         </Dialog>

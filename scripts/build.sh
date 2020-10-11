@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# env vars passed into client & server apps (done by webpack)
+export APP_NAME="A db-agnostic, React-based web application starter boilerplate"
+
+LAST_COMMIT=$(git log -1 --pretty=format:"%h")
+GIT_DIRTY_STATE=$(git diff --quiet || echo "*")
+export BUILD_SIGNATURE=$LAST_COMMIT$GIT_DIRTY_STATE
+
 # some lines are commented out as they are optional features
 
 START_TIME=$(date +%s)

@@ -25,7 +25,8 @@ async function main(): Promise<void> {
         somnus.logger.info({ app_message: `server listening on port ${addr.port}`});
 
         // just so it's extra clear where to access the app
-        console.log(`app accessible at http://localhost:${addr.port}`);
+        console.log(`app ${process.env.BUILD_SIGNATURE}, server env ${process.env.NODE_ENV}, ` +
+          `accessible at http://localhost:${addr.port}`);
 
     });
 
