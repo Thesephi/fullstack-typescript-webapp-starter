@@ -58,3 +58,4 @@ npm test
 - The build is not yet optimized (output sizes larger than they could be in real production setups)
 - There is no example test suite yet for the backend part (REST endpoints)
 - The dev flow (build/start) was not tested on platforms other than MacOS
+- `npm run start-dev` still errors on terminated (whereas it should not do so)
