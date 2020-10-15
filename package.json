@@ -17,9 +17,13 @@
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "@types/restify": "^8.4.2",
+    "css-loader": "^5.0.0",
     "jest": "^26.1.0",
     "nodemon": "^2.0.4",
+    "sass": "^1.27.0",
+    "sass-loader": "^10.0.3",
     "source-map-loader": "^1.0.1",
+    "style-loader": "^2.0.0",
     "ts-jest": "^26.1.2",
     "ts-loader": "^8.0.1",
     "typescript": "^4.0.0-beta",
@@ -27,8 +31,8 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "@blueprintjs/core": "^3.29.0",
-    "@blueprintjs/icons": "^3.19.0",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "react": "0.0.0-experimental-7f28234f8",
     "react-dom": "0.0.0-experimental-7f28234f8",
     "somnus": "^3.0.1"

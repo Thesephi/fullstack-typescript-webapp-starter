@@ -1,3 +1,12 @@
+## [1.2.0] - 2020-10-16
+
+### Changed
+- form can be submitted via `Enter` key as well as clicking on the Submit button
+- Material-UI is now the default UI framework
+
+### Added
+- the use of SCSS
+
 ## [1.1.0] - 2020-10-11
 
 ### Changed

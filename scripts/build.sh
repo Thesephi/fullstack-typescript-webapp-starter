@@ -33,10 +33,14 @@ build_client() {
   # webpack will be under `watch` mode if WATCH=true, hence the parallel process
   { webpack --config ./src/client/webpack.config.js >&1 ; } &
 
+  # uncomment if you want to use Atlaskit
+  # cp -r ./node_modules/@atlaskit/css-reset/dist/bundle.css ./build/public/css/css-reset.css
+
+  # uncomment if you want to use Blueprint
   # cp -r ./node_modules/@blueprintjs/datetime/lib/css/* ./build/public/css/
-  cp -r ./node_modules/normalize.css/normalize.css ./build/public/css/
-  cp -r ./node_modules/@blueprintjs/core/lib/css/* ./build/public/css/
-  cp -r ./node_modules/@blueprintjs/icons/lib/css/* ./build/public/css/
+  # cp -r ./node_modules/normalize.css/normalize.css ./build/public/css/
+  # cp -r ./node_modules/@blueprintjs/core/lib/css/* ./build/public/css/
+  # cp -r ./node_modules/@blueprintjs/icons/lib/css/* ./build/public/css/
 
 }
 

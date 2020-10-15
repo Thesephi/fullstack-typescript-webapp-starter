@@ -6,6 +6,7 @@
           "shared/*": ["../shared/*"]
         },
         "sourceMap": true,
+        "esModuleInterop": true,
         "noImplicitAny": true,
         "module": "commonjs",
         "target": "es6",
