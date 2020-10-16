@@ -11,7 +11,7 @@ export BUILD_SIGNATURE=$LAST_COMMIT$GIT_DIRTY_STATE
 
 START_TIME=$(date +%s)
 
-mkdir -p ./build/public/css
+mkdir -p ./build/{server,public/css}
 
 THIS_DIR=`dirname $0`
 BUILD_DIR=`realpath "$THIS_DIR/../build"`
