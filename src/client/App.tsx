@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Input from "@material-ui/core/Input";
 import { Alert, AlertTitle } from "@material-ui/lab";
@@ -78,7 +79,9 @@ const App: React.FunctionComponent = () => {
   <form action="#" autoComplete="off" onSubmit={attemptSubmit}>
     <DialogTitle id="dialog-title">{process.env.APP_NAME}</DialogTitle>
     <DialogContent>
-      <h5>{"Demo simple web app "}<small>{"(all fields are required)"}</small></h5>
+      <h5><DialogContentText>
+        <small>{"all fields are required"}</small>
+      </DialogContentText></h5>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div style={{ flexGrow: 1 }}>
             <Input
@@ -118,14 +121,14 @@ const App: React.FunctionComponent = () => {
             fullWidth
           />
         </div>
-      {feedback !== "" && <Alert severity="info">
+      {feedback !== "" && <Alert severity="info" className="feedback-info">
         <span>{feedback}</span>
         {" "}
         (<a href="/entries" target="_blank" style={{ textDecoration: "underline", color: "inherit" }}>
             {"view all entries as JSON"}
         </a>)
       </Alert>}
-      {errors.length > 0 && <Alert severity="error">
+      {errors.length > 0 && <Alert severity="error" className="feedback-error">
         <AlertTitle>{"You have entered invalid information"}</AlertTitle>
         <ul style={{ padding: "0 0 0 20px", margin: 0 }}>
             {errors.map((error, i) => <li key={i}>{error}</li>)}
