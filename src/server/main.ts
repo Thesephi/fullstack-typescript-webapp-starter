@@ -18,7 +18,8 @@ async function main(): Promise<void> {
 
             // just during dev, for prod, a reverse proxy is better
             "get /js/*": somnus.restify.plugins.serveStatic({ directory: "../public/" }),
-            "get /css/*": somnus.restify.plugins.serveStatic({ directory: "../public/" })
+            "get /css/*": somnus.restify.plugins.serveStatic({ directory: "../public/" }),
+            "get /fonts/*": somnus.restify.plugins.serveStatic({ directory: "../public/" })
 
         }
     }, (addr) => {

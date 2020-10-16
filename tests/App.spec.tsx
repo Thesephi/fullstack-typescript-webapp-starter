@@ -1,7 +1,6 @@
 import "jest";
 import * as React from "react";
 import { act, Simulate } from "react-dom/test-utils";
-import { Classes } from "@blueprintjs/core";
 import { render, unmountComponentAtNode } from "react-dom";
 import App from "../src/client/App";
 
@@ -31,12 +30,12 @@ describe("App", () => {
   });
 
   it("should render the dialog DOM as specified", () => {
-    const dialog = document.querySelector("." + Classes.DIALOG)!;
+    const dialog = document.querySelector(".the-dialog")!;
     expect(dialog.innerHTML).toMatchSnapshot();
   });
 
   it("should not show any error in the beginning", () => {
-    const calloutErrors = document.querySelector(".co-errors");
+    const calloutErrors = document.querySelector(".feedback-error");
     expect(calloutErrors).toBeNull();
   });
 
@@ -45,18 +44,26 @@ describe("App", () => {
     const submitBtn = document.querySelector("button[type=submit]") as HTMLButtonElement;
     expect(submitBtn).not.toBeNull();
 
+    const form: HTMLFormElement = document.querySelector("form") as HTMLFormElement;
+    expect(form.contains(submitBtn)).toEqual(true);
+
+    // @TODO find out why simulating the `click` event on the submit button does
+    // not work, but simulating the `submit` event on the form does
+    // const submitBtn = document.querySelector("button[type=submit]") as HTMLButtonElement;
+    // await act(async () => {
+    //   Simulate.click(submitBtn);
+    // });
+
     act(() => {
-      Simulate.click(submitBtn);
+      Simulate.submit(form);
     });
 
     expect(mockFetch).not.toHaveBeenCalled();
 
-    const calloutErrors = document.querySelector(".co-errors") as HTMLElement;
+    const calloutErrors = document.querySelector(".feedback-error") as HTMLElement;
     expect(calloutErrors).not.toBeNull();
 
-    expect(calloutErrors.innerHTML).toEqual(
-      `<ul style="padding: 0px 0px 0px 20px; margin: 0px;"><li>missing first name</li><li>missing last name</li><li>invalid email address</li></ul>`
-    );
+    expect(calloutErrors.innerHTML).toMatchSnapshot();
 
   });
 
@@ -77,10 +84,8 @@ describe("App", () => {
 
     expect(mockFetch).not.toHaveBeenCalled();
 
-    const calloutErrors = document.querySelector(".co-errors") as HTMLElement;
-    expect(calloutErrors.innerHTML).toEqual(
-      `<ul style="padding: 0px 0px 0px 20px; margin: 0px;"><li>missing last name</li><li>invalid email address</li></ul>`
-    );
+    const calloutErrors = document.querySelector(".feedback-error") as HTMLElement;
+    expect(calloutErrors.innerHTML).toMatchSnapshot();
 
   });
 
@@ -101,10 +106,8 @@ describe("App", () => {
 
     expect(mockFetch).not.toHaveBeenCalled();
 
-    const calloutErrors = document.querySelector(".co-errors") as HTMLElement;
-    expect(calloutErrors.innerHTML).toEqual(
-      `<ul style=\"padding: 0px 0px 0px 20px; margin: 0px;\"><li>invalid email address</li></ul>`
-    );
+    const calloutErrors = document.querySelector(".feedback-error") as HTMLElement;
+    expect(calloutErrors.innerHTML).toMatchSnapshot();
 
   });
 
@@ -130,9 +133,16 @@ describe("App", () => {
       Simulate.change(emailInput);
     });
 
-    const submitBtn = document.querySelector("button[type=submit]") as HTMLButtonElement;
+    // @TODO find out why simulating the `click` event on the submit button does
+    // not work, but simulating the `submit` event on the form does
+    // const submitBtn = document.querySelector("button[type=submit]") as HTMLButtonElement;
+    // await act(async () => {
+    //   Simulate.click(submitBtn);
+    // });
+
+    const form: HTMLFormElement = document.querySelector("form") as HTMLFormElement;
     await act(async () => {
-      Simulate.click(submitBtn);
+      Simulate.submit(form);
     });
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -149,13 +159,11 @@ describe("App", () => {
       })
     }));
 
-    const calloutErrors = document.querySelector(".co-errors") as HTMLElement;
+    const calloutErrors = document.querySelector(".feedback-error") as HTMLElement;
     expect(calloutErrors).toBeNull();
 
-    const calloutFeedback = document.querySelector(".co-feedback") as HTMLElement;
-    expect(calloutFeedback.innerHTML).toEqual(
-      `<span>Yay</span> (<a href="/entries" target="_blank" style="text-decoration: underline;">view all entries as JSON</a>)`
-    );
+    const calloutFeedback = document.querySelector(".feedback-info") as HTMLElement;
+    expect(calloutFeedback.innerHTML).toMatchSnapshot();
 
   });
 
