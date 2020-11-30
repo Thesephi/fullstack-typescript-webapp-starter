@@ -1,28 +1,94 @@
 const webpack = require("webpack");
 const path = require("path");
-const sharedConfig = require(path.resolve(__dirname, "../webpack.shared.config.js"));
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ReactRefreshPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const sharedConfig = require("../webpack.shared.config.js"); // do not use `path.resolve` here
+
+const isDevelopment = sharedConfig.mode !== "production";
 
 module.exports = {
 
   ...sharedConfig,
 
+  context: __dirname,
+
   target: "web",
 
-  entry: path.resolve(__dirname, "main.tsx"),
+  // if using webpack-hot-middleware
+  entry: {
+    main: [
+      isDevelopment && "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true", // &overlay=false
+      path.resolve(__dirname, "./main.tsx"),
+      // isDevelopment && "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000", // &overlay=false
+    ].filter(Boolean)
+  },
+
+  // if using webpack-dev-server
+  // entry: {
+  //   main: path.resolve(__dirname, "./main.tsx"),
+  // },
+  
+  devServer: {
+    // contentBase: path.resolve(__dirname, "../../build/public"),
+    hot: true,
+    hmr: true
+  },
 
   output: {
     // path: path.resolve(__dirname, "../../build/public"),
     // filename: "js/main.js"
     path: process.env.WEBPACK_CLIENT_APP_OUTPUT_DIR,
-    filename: process.env.WEBPACK_CLIENT_APP_OUTPUT_FILENAME
+    filename: process.env.WEBPACK_CLIENT_APP_OUTPUT_FILENAME,
+    publicPath: "/"
+  },
+  
+  module: {
+    ...sharedConfig.module,
+    rules: [
+      ...sharedConfig.module.rules,
+      {
+        // only for webpack@5
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false
+        }
+      },
+      {
+        // test: /\.ts(x?)$/,
+        test: /\.(t|j)s(x?)$/,
+        // include: path.resolve(process.cwd(), "src/client"),
+        exclude: /node_modules/,
+        use: [
+          isDevelopment && {
+            loader: "babel-loader",
+            options: { plugins: ["react-refresh/babel"] }
+          },
+          {
+            loader: "ts-loader",
+            options: { transpileOnly: true }
+          }
+        ].filter(Boolean)
+      }
+    ]
   },
 
   plugins: [
     ...(sharedConfig.plugins || []),
     new webpack.EnvironmentPlugin({
       APP_NAME: process.env.APP_NAME
+    }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(__dirname, "../../build/server/view-templates/index.html"),
+      template: path.resolve(__dirname, "../server/view-templates/index.html"),
+      publicPath: "/"
+    }),
+    isDevelopment && new webpack.HotModuleReplacementPlugin(),
+    isDevelopment && new ReactRefreshPlugin({
+      overlay: {
+        sockIntegration: "whm",
+      }
     })
-  ]
+  ].filter(Boolean)
 
   /* the following optimization is disabled for the sake of simplicity for the exercise */
   // When importing a module whose path matches one of the following, just

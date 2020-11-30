@@ -88,7 +88,7 @@ const App: React.FunctionComponent = () => {
               name="firstName"
               type="text"
               inputMode="text"
-              placeholder={"first name"}
+              placeholder={"first naaaame"}
               value={firstName}
               onChange={(evt: React.ChangeEvent<HTMLInputElement>) => setFirstName(evt.target.value)}
               inputProps={{ "aria-label": "first name" }}

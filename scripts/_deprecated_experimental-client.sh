@@ -23,12 +23,5 @@ export WEBPACK_SERVER_APP_OUTPUT_FILENAME="main.js"
 export SERVER_APP="$WEBPACK_SERVER_APP_OUTPUT_DIR/$WEBPACK_SERVER_APP_OUTPUT_FILENAME"
 export CLIENT_APP="$WEBPACK_CLIENT_APP_OUTPUT_DIR/$WEBPACK_CLIENT_APP_OUTPUT_FILENAME"
 
-# force development mode (we have `build-prod.sh` for production mode already)
-export NODE_ENV=development
-
-EFFECTIVE_PORT=$PORT
-if [ -z $EFFECTIVE_PORT ]; then
-    EFFECTIVE_PORT=3000
-fi
-
-PORT=$EFFECTIVE_PORT ts-node --project src/server/tsconfig.json -r tsconfig-paths/register src/server/main.ts
+# npx webpack --config ./src/server/webpack.config.js
+npx webpack --config ./src/client/webpack.config.js

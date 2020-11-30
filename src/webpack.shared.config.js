@@ -1,7 +1,8 @@
 const webpack = require("webpack");
 const path = require("path");
 
-const mode = process.env.NODE_ENV || "production";
+const isDevelopment = process.env.NODE_ENV !== "production";
+const mode = isDevelopment ? "development" : "production";
 
 console.log(`webpack operating under mode \`${mode}\``);
 
@@ -32,15 +33,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts(x?)$/,
-        exclude: /node_modules/,
-        use: [
-            {
-                loader: "ts-loader"
-            }
-        ]
-      },
-      {
         test: /\.s[ac]ss$/i,
         use: [
           // Creates `style` nodes from JS strings
@@ -52,7 +44,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        test: /\.(woff|woff2|eot|ttf|otf|node)$/,
         loader: "file-loader",
         options: {
           outputPath: "fonts"

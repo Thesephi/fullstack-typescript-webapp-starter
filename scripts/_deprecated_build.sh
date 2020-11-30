@@ -65,8 +65,10 @@ build_server() {
     webpack --config ./src/server/webpack.config.js
   fi
 
-  #TODO inject build-time vars as needed
-  cp -r ./src/server/view-templates ./build/server/
+  # since utilising HMR, we've let html-webpack-plugin take care of generating
+  # the index.html entry file; feel free to inject variables following their
+  # [document](https://github.com/jantimon/html-webpack-plugin#options)
+  #cp -r ./src/server/view-templates ./build/server/
 
 }
 
@@ -105,8 +107,8 @@ get_last_modified_ts() {
 
 trigger_builds() {
 
-  build_client
-  wait_for_file "$CLIENT_APP"
+  # build_client
+  # wait_for_file "$CLIENT_APP"
   build_server
   wait_for_file "$SERVER_APP"
 

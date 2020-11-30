@@ -1,6 +1,8 @@
 const webpack = require("webpack");
 const path = require("path");
-const sharedConfig = require(path.resolve(__dirname, "../webpack.shared.config.js"));
+const sharedConfig = require("../webpack.shared.config.js"); // do not use `path.resolve` here
+
+const isDevelopment = sharedConfig.mode !== "production";
 
 module.exports = {
 
@@ -19,6 +21,35 @@ module.exports = {
   output: {
     path: process.env.WEBPACK_SERVER_APP_OUTPUT_DIR,
     filename: process.env.WEBPACK_SERVER_APP_OUTPUT_FILENAME
+  },
+
+  externals: {
+    "@pmmmwh/react-refresh-webpack-plugin": "@pmmmwh/react-refresh-webpack-plugin"
+  },
+  
+  module: {
+    ...sharedConfig.module,
+    rules: [
+      ...sharedConfig.module.rules,
+      {
+        test: /\.ts(x?)$/,
+        exclude: [
+          /node_modules/
+        ],
+        use: [
+          "ts-loader"
+        ]
+      },
+      // {
+      //   test: /\.js$/,
+      //   exclude: [
+      //     /\/client\/webpack\.config\.js/
+      //   ],
+      //   use: [
+      //     "ts-loader"
+      //   ]
+      // }
+    ]
   },
 
   plugins: [
