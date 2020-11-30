@@ -1,10 +1,4 @@
-import path from "path";
-import fs from "fs";
 import restify from "restify";
-// const outputFileSystem = require("memfs");
-// const mkdirp = require("mkdirp");
-// outputFileSystem.join = path.join.bind(path); // no need to bind
-// outputFileSystem.mkdirp = mkdirp.bind(mkdirp); // no need to bind
 
 let inited: boolean = false;
 
@@ -18,44 +12,9 @@ async function initWebpackDevMiddleware(app: restify.Server) {
     // do nothing in production
     return;
   }
-  
-  // if (!process.env.WEBPACK_CLIENT_CONFIG) {
-  //   console.log("please specify env var `WEBPACK_CLIENT_CONFIG` for webpack custom dev server");
-  //   return;
-  // }
 
   const webpack = require("webpack");
-  // const config = await import(process.env.WEBPACK_CLIENT_CONFIG);
-  // const configFile = fs.readFileSync(process.env.WEBPACK_CLIENT_CONFIG, "utf8");
-  // const config = eval(configFile);
-  // const config = require(path.resolve(process.env.WEBPACK_CLIENT_CONFIG));
-  // tslint:disable-next-line
-  // const config: any = await import('../client/webpack.config.js');
-  // console.log("CONFIG", config);
   const config = require("../client/webpack.config.js"); // do not use `path.resolve` here
-  // const config: any = {
-  //   output: {
-  //     mode: process.env.NODE_ENV,
-  //     target: "web",
-  //     publicPath: "/",
-  //     entry: {
-  //       main: [
-  //         "webpack-hot-middleware/client?path=__webpack_hmr&timeout=2000&overlay=false",
-  //         path.resolve(process.cwd(), "src/client/main.tsx")
-  //         // "src/client/main.tsx"
-  //       ]
-  //     },
-  //     resolve: {
-  //       // Add '.ts' and '.tsx' as resolvable extensions.
-  //       // Add '.js' is so that React itself can be compiled (though this is not required during prod).
-  //       extensions: [".ts", ".tsx", ".js"],
-  //       alias: {
-  //         shared: path.resolve(process.cwd(), "src/shared/")
-  //       }
-  //     },
-  //   }
-  // };
-  // config.plugins = [];
   const compiler = webpack(config);
 
   app.use(
@@ -77,19 +36,16 @@ async function initWebpackDevMiddleware(app: restify.Server) {
         return typeof body === "string" ? JSON.parse(body) : body;
       };
 
+      // @TODO what about font files?
+
       next();
     },
     require("webpack-dev-middleware")(compiler, {
+      // https://github.com/webpack/webpack-dev-middleware#options
       publicPath: config.output.publicPath,
-      writeToDisk: true,
-      // outputFileSystem
+      writeToDisk: true
     })
   );
-
-  // app.get('/js/main.js', (req, res) => {
-  //   console.log(compiler);
-  //   return res.send(405);
-  // });
 
   // requests for `.js`, `.js.map` and `/webpack_hmr` shall pass thru this
   app.pre(
@@ -101,6 +57,7 @@ async function initWebpackDevMiddleware(app: restify.Server) {
       return next();
     },
     require("webpack-hot-middleware")(compiler, {
+      // https://github.com/webpack-contrib/webpack-hot-middleware#middleware
       // log: false,
       path: "/__webpack_hmr",
       heartbeat: 10 * 1000

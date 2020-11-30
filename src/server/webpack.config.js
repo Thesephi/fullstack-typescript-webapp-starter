@@ -24,6 +24,8 @@ module.exports = {
   },
 
   externals: {
+    // we only need `react-refresh-webpack-plugin` during development, so it is
+    // desirable to mark it as external less our server-side module fails to compile
     "@pmmmwh/react-refresh-webpack-plugin": "@pmmmwh/react-refresh-webpack-plugin"
   },
   
@@ -39,16 +41,7 @@ module.exports = {
         use: [
           "ts-loader"
         ]
-      },
-      // {
-      //   test: /\.js$/,
-      //   exclude: [
-      //     /\/client\/webpack\.config\.js/
-      //   ],
-      //   use: [
-      //     "ts-loader"
-      //   ]
-      // }
+      }
     ]
   },
 

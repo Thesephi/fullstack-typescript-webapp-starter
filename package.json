@@ -7,11 +7,7 @@
     "start-dev": "scripts/start-dev.sh",
     "start-prod": "LOG_LEVEL=info PORT=3000 npm start",
     "start": "NODE_ENV=production node build/server/main.js",
-    "test": "scripts/test.sh",
-    "_build": "scripts/build.sh",
-    "_start-dev": "WATCH=true NODE_ENV=development scripts/start-dev.sh",
-    "_dev:build:fe": "webpack --config ./src/client/webpack.config.js",
-    "_dev:copy:be": "cp -r ./src/server/view-templates ./build/server/"
+    "test": "scripts/test.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

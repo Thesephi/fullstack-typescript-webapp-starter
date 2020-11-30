@@ -17,21 +17,10 @@ module.exports = {
   // if using webpack-hot-middleware
   entry: {
     main: [
-      isDevelopment && "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true", // &overlay=false
-      path.resolve(__dirname, "./main.tsx"),
-      // isDevelopment && "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000", // &overlay=false
+      // https://github.com/webpack-contrib/webpack-hot-middleware#config
+      isDevelopment && "webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true",
+      path.resolve(__dirname, "./main.tsx")
     ].filter(Boolean)
-  },
-
-  // if using webpack-dev-server
-  // entry: {
-  //   main: path.resolve(__dirname, "./main.tsx"),
-  // },
-  
-  devServer: {
-    // contentBase: path.resolve(__dirname, "../../build/public"),
-    hot: true,
-    hmr: true
   },
 
   output: {
@@ -48,15 +37,14 @@ module.exports = {
       ...sharedConfig.module.rules,
       {
         // only for webpack@5
+        // https://github.com/webpack/webpack/issues/11467#issuecomment-691873586
         test: /\.m?js/,
         resolve: {
           fullySpecified: false
         }
       },
       {
-        // test: /\.ts(x?)$/,
         test: /\.(t|j)s(x?)$/,
-        // include: path.resolve(process.cwd(), "src/client"),
         exclude: /node_modules/,
         use: [
           isDevelopment && {

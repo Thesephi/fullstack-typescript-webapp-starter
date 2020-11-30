@@ -32,6 +32,7 @@ async function main(): Promise<void> {
         routeConfig = {
             ...routeConfig,
 
+            // @TODO read from mem instead of from physical file; turning off `writeToDisk` afterwards
             "get /": (req: Request, res: Response) =>
                 outputView(req, res, process.env.WEBPACK_SERVER_APP_OUTPUT_DIR + "/view-templates/index.html"),
 
