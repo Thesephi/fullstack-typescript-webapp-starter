@@ -43,8 +43,8 @@
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "fontsource-roboto": "^3.0.3",
-    "react": "0.0.0-experimental-7f28234f8",
-    "react-dom": "0.0.0-experimental-7f28234f8",
+    "react": "0.0.0-experimental-4ead6b530",
+    "react-dom": "0.0.0-experimental-4ead6b530",
     "somnus": "^3.0.1"
   },
   "jest": {
