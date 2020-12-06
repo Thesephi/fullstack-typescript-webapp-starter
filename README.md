@@ -54,7 +54,8 @@ npm test
 ## Caveats / TODOs
 
 - Source mapping doesn't work yet for the server app, and thus JS error logs are not pointing to the desirable line/column in the .ts files
-- Hot (live) reloading is not enabled for client-side assets yet
+- remove the use of the `writeToDisk` webpack config except where we must use it
+- do not spit out error when operating in a non-git environment
 - The build is not yet optimized (output sizes larger than they could be in real production setups)
 - There is no example test suite yet for the backend part (REST endpoints)
 - The dev flow (build/start) was not tested on platforms other than MacOS

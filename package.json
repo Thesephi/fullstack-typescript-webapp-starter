@@ -4,10 +4,11 @@
   "description": "A db-agnostic, React-based web application starter boilerplate",
   "scripts": {
     "build-prod": "scripts/build-prod.sh",
-    "start-dev": "scripts/start-dev.sh",
-    "start-prod": "LOG_LEVEL=info PORT=3000 npm start",
+    "build": "npm run build-prod",
+    "dev": "scripts/start-dev.sh",
     "start": "NODE_ENV=production node build/server/main.js",
-    "test": "scripts/test.sh"
+    "test": "scripts/test.sh",
+    "example:start": "LOG_LEVEL=info PORT=3000 npm start"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

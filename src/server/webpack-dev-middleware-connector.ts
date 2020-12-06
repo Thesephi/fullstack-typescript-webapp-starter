@@ -17,33 +17,12 @@ async function initWebpackDevMiddleware(app: restify.Server) {
   const config = require("../client/webpack.config.js"); // do not use `path.resolve` here
   const compiler = webpack(config);
 
-  app.use(
-    (req, res, next) => {
+  somnusWdmWhmCompatibilityFix(app);
 
-      // console.log("formatters");
-      // console.log(app.formatters);
-
-      app.formatters["application/javascript"] = (req, res, body) => {
-        console.log("somnus: custom application/javascript handling");
-        res.set({ 'Content-Type': "text/javascript" });
-        if (body instanceof Error) return body.stack;
-        return Buffer.isBuffer(body) ? body.toString('utf8') : body;
-      };
-
-      app.formatters["application/json"] = (req, res, body) => {
-        console.log("somnus: custom application/json handling");
-        if (body instanceof Error) return body.stack;
-        return typeof body === "string" ? JSON.parse(body) : body;
-      };
-
-      // @TODO what about font files?
-
-      next();
-    },
-    require("webpack-dev-middleware")(compiler, {
+  app.use(require("webpack-dev-middleware")(compiler, {
       // https://github.com/webpack/webpack-dev-middleware#options
       publicPath: config.output.publicPath,
-      writeToDisk: true
+      writeToDisk: true // @TODO disable this when we can serve `index.html` from mem
     })
   );
 
@@ -65,6 +44,38 @@ async function initWebpackDevMiddleware(app: restify.Server) {
   );
 
   inited = true;
+
+}
+
+function somnusWdmWhmCompatibilityFix(app: restify.Server): void {
+
+  // console.debug("formatters", app.formatters);
+
+  app.formatters["application/javascript"] = (req, res, body) => {
+    console.log("somnus: custom application/javascript handling");
+    res.set({ 'Content-Type': "text/javascript" });
+    if (body instanceof Error) return body.stack;
+    // @TODO see if we can narrow this rule further down,
+    // like we currently do it for the json formatter below
+    // (the idea is to handle the minimum needed to make our setup work with
+    // `webpack-hot-module` and `webpack-dev-middleware`)
+    return Buffer.isBuffer(body) ? body.toString('utf8') : body;
+  };
+
+  const defaultJsonFormatter = app.formatters["application/json"];
+  app.formatters["application/json"] = (req, res, body) => {
+    const thePath = req.getPath();
+    // serving webpack-hot-middleware json files
+    if (thePath.endsWith("hot-update.json")) {
+      console.log("somnus: custom application/json handling");
+      if (body instanceof Error) return body.stack;
+      return typeof body === "string" ? JSON.parse(body) : body;
+    }
+    // for any case other than serving webpack-hot-middleware json files
+    return defaultJsonFormatter(req, res, body);
+  };
+
+  // @TODO what about font files?
 
 }
 
