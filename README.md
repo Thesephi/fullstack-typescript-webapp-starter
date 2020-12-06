@@ -54,9 +54,8 @@ npm test
 ## Caveats / TODOs
 
 - Source mapping doesn't work yet for the server app, and thus JS error logs are not pointing to the desirable line/column in the .ts files
-- remove the use of the `writeToDisk` webpack config except where we must use it
-- do not spit out error when operating in a non-git environment
+- Remove the use of the `writeToDisk` webpack config except where we must use it
 - The build is not yet optimized (output sizes larger than they could be in real production setups)
 - There is no example test suite yet for the backend part (REST endpoints)
-- The dev flow (build/start) was not tested on platforms other than MacOS
-- `npm run start-dev` still errors on terminated (whereas it should not do so)
+- The dev flow (`npm run dev`) has not been tested on platforms other than MacOS
+- `npm run dev` still errors on (Ctrl+C) terminated (whereas it should not do so)

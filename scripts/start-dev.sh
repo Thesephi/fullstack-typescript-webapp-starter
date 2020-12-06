@@ -1,4 +1,4 @@
-source $(dirname $0)/_shared.env.sh
+source $(dirname $0)/_shared-env.sh
 
 # force development mode (we have `build-prod.sh` for production mode already)
 export NODE_ENV=development

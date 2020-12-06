@@ -28,5 +28,6 @@ Temporary Items
 
 _deprecated
 /local.sh
+/_shared-env.err.log
 node_modules
 build
