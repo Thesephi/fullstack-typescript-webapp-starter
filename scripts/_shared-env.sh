@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # env vars passed into client & server apps (done by webpack)
 export APP_NAME="A db-agnostic, React-based web application starter boilerplate"
 
@@ -5,9 +7,7 @@ LAST_COMMIT=$(git log -1 --pretty=format:"%h" 2>>_shared-env.err.log)
 GIT_DIRTY_STATE=$(git diff --quiet 2>>_shared-env.err.log || echo "*")
 export BUILD_SIGNATURE=$LAST_COMMIT$GIT_DIRTY_STATE
 
-echo "BUILD_SIGNATURE: $BUILD_SIGNATURE\n"
-
-# some lines are commented out as they are optional features
+printf "BUILD_SIGNATURE: $BUILD_SIGNATURE\n\n"
 
 START_TIME=$(date +%s)
 

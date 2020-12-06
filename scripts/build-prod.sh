@@ -1,3 +1,5 @@
+#!/bin/bash
+
 source $(dirname $0)/_shared-env.sh
 
 # force production mode (we have `start-server-dev.sh` for development mode already)
