@@ -63,7 +63,7 @@ module.exports = {
   plugins: [
     ...(sharedConfig.plugins || []),
     new webpack.EnvironmentPlugin({
-      APP_NAME: process.env.APP_NAME
+      APP_NAME: process.env.APP_NAME || ""
     }),
     new HtmlWebpackPlugin({
       // @NOTE inject build-time vars as needed
@@ -77,7 +77,10 @@ module.exports = {
         : path.resolve(__dirname, "../../build/server/view-templates/index.html"),
 
       template: path.resolve(__dirname, "../server/view-templates/index.html"),
-      publicPath: "/"
+      publicPath: "/",
+      templateParameters: {
+        title: process.env.APP_NAME
+      }
     }),
     isDevelopment && new webpack.HotModuleReplacementPlugin(),
     isDevelopment && new ReactRefreshPlugin({
