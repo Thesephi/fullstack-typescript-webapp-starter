@@ -66,7 +66,16 @@ module.exports = {
       APP_NAME: process.env.APP_NAME
     }),
     new HtmlWebpackPlugin({
-      filename: path.resolve(__dirname, "../../build/server/view-templates/index.html"),
+      // @NOTE inject build-time vars as needed
+      filename: isDevelopment
+
+        // to be served by `get /` from the server-side module during development
+        // (served from memory)
+        ? "index.html"
+
+        // built into a physical `index.html` file in the dist dir for production
+        : path.resolve(__dirname, "../../build/server/view-templates/index.html"),
+
       template: path.resolve(__dirname, "../server/view-templates/index.html"),
       publicPath: "/"
     }),

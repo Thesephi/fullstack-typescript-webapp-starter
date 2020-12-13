@@ -32,10 +32,7 @@ async function main(): Promise<void> {
         routeConfig = {
             ...routeConfig,
 
-            // @TODO read from mem instead of from physical file; turning off `writeToDisk` afterwards
-            "get /": (req: Request, res: Response) =>
-                outputView(req, res, process.env.WEBPACK_SERVER_APP_OUTPUT_DIR + "/view-templates/index.html"),
-
+            "get /": somnus.restify.plugins.serveStatic({ directory: process.env.WEBPACK_CLIENT_APP_OUTPUT_DIR }),
             "get /js/*": somnus.restify.plugins.serveStatic({ directory: process.env.WEBPACK_CLIENT_APP_OUTPUT_DIR }),
             "get /*hot-update.json": somnus.restify.plugins.serveStatic({ directory: join(process.env.WEBPACK_CLIENT_APP_OUTPUT_DIR!, "../") }),
             "get /*hot-update.js": somnus.restify.plugins.serveStatic({ directory: join(process.env.WEBPACK_CLIENT_APP_OUTPUT_DIR!, "../") }),
