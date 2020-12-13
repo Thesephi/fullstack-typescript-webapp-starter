@@ -16,7 +16,16 @@ echo "cleaning up $BUILD_DIR/{server,public} ..."
 rm -rf $BUILD_DIR/{server,public}
 mkdir -p $BUILD_DIR/{server,public/css}
 
-# force production mode (we have `start-server-dev.sh` for development mode already)
+# uncomment & adjust as needed if you want to use Atlaskit
+# cp -r ./node_modules/@atlaskit/css-reset/dist/bundle.css ./build/public/css/css-reset.css
+
+# uncomment & adjust as needed if you want to use Blueprint
+# cp -r ./node_modules/@blueprintjs/datetime/lib/css/* ./build/public/css/
+# cp -r ./node_modules/normalize.css/normalize.css ./build/public/css/
+# cp -r ./node_modules/@blueprintjs/core/lib/css/* ./build/public/css/
+# cp -r ./node_modules/@blueprintjs/icons/lib/css/* ./build/public/css/
+
+# force production mode (we have `start-dev.sh` for development mode already)
 export NODE_ENV=production
 
 echo "building production client-side assets..."
