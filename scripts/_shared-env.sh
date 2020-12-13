@@ -13,6 +13,15 @@ START_TIME=$(date +%s)
 
 mkdir -p ./build/{server,public/css}
 
+# uncomment if you want to use Atlaskit
+# cp -r ./node_modules/@atlaskit/css-reset/dist/bundle.css ./build/public/css/css-reset.css
+
+# uncomment if you want to use Blueprint
+# cp -r ./node_modules/@blueprintjs/datetime/lib/css/* ./build/public/css/
+# cp -r ./node_modules/normalize.css/normalize.css ./build/public/css/
+# cp -r ./node_modules/@blueprintjs/core/lib/css/* ./build/public/css/
+# cp -r ./node_modules/@blueprintjs/icons/lib/css/* ./build/public/css/
+
 THIS_DIR=`dirname $0`
 BUILD_DIR=`realpath "$THIS_DIR/../build"`
 
