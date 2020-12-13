@@ -1,4 +1,4 @@
-## [1.3.0] - 2020-12-06
+## [1.3.0] - 2020-12-13
 
 ### Changed
 - `npm run start-dev` => `npm run dev`
