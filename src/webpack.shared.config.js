@@ -44,7 +44,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf|node)$/,
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
         loader: "file-loader",
         options: {
           outputPath: "fonts"
