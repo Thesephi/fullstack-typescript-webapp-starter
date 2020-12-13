@@ -1,3 +1,15 @@
+## [1.3.0] - 2020-12-13
+
+### Changed
+- `npm run start-dev` => `npm run dev`
+- renamed, removed, and revamped other npm scripts
+- the nature of the dev flow has changed substantially (client-side assets are now generated via `webpack` embedded into the server-side module)
+- on production, everything should behave like before (no `webpack-dev-middleware`, no `react-refresh`)
+- the template `index.html` now has its `title` injected by `webpack` using the build-time env var `APP_NAME`
+
+### Added
+- the use of `react-refresh` (via `webpack-dev-middleware` and `webpack-hot-middleware`) to support live-reload
+
 ## [1.2.0] - 2020-10-16
 
 ### Changed

@@ -1,22 +1,13 @@
 #!/bin/bash
 
-# some lines are commented out as they are optional features
+source $(dirname $0)/_shared-env.sh
 
-# export MONGOMS_SYSTEM_BINARY=$(which mongod)
-# echo "Local mongod set at $MONGOMS_SYSTEM_BINARY"
+# force development mode (we have `build-prod.sh` for production mode already)
+export NODE_ENV=development
 
-THIS_DIR=`dirname $0`
-BUILD_DIR=`realpath "$THIS_DIR/../build"`
+EFFECTIVE_PORT=$PORT
+if [ -z $EFFECTIVE_PORT ]; then
+    EFFECTIVE_PORT=3000
+fi
 
-# `source` the build script so that exported env vars in there are reusable
-# note that this will start `tsc` and `webpack` compiling processes, potentially under
-# `watch` mode as parallel processes piping their outputs to &1
-source "./$THIS_DIR/build.sh"
-
-while [ ! -f "$CLIENT_APP" ]
-do
-  echo "waiting for $CLIENT_APP"
-  sleep 1
-done
-
-nodemon -w "$BUILD_DIR/server" $SERVER_APP
+PORT=$EFFECTIVE_PORT nodemon
