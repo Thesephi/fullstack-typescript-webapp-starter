@@ -43,7 +43,7 @@ export async function outputView(req: Request, res: Response, templatePath: stri
             "Content-Length": String(layout.byteLength)
         });
     } catch (e) {
-        res.send(500, e.message);
+        res.send(500, (e as Error).message);
     }
 }
 
@@ -81,7 +81,7 @@ export async function getEntries(req: Request, res: Response): Promise<void> {
         const allEntries = await col.find().toArray();
         return res.send({ message: `Listing all entries`, details: allEntries });
     } catch (e) {
-        return res.send(500, { message: `Failed parsing result from database: ${e.message}` });
+        return res.send(500, { message: `Failed parsing result from database: ${(e as Error).message}` });
     }
 
 }
