@@ -44,14 +44,15 @@ module.exports = {
         ]
       },
       {
+        // These used to be handled by `file-loader` but are now handled by webpack@5 asset modules
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        loader: "file-loader",
-        options: {
-          outputPath: "fonts"
+        type: 'asset/resource',
+        generator: {
+          filename: "fonts/[name].[ext]"
         }
       },
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
       {
+        // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
         enforce: "pre",
         test: /\.js$/,
         loader: "source-map-loader"

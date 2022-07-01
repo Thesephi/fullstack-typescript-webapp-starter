@@ -59,7 +59,7 @@ const App: React.FunctionComponent = () => {
               
           } catch (e) {
               // display API call error
-              setErrors([`An error occurred: ${e.message}`]);
+              setErrors([`An error occurred: ${(e as Error).message}`]);
           }
           setIsSubmitting(false);
 

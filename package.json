@@ -10,23 +10,20 @@
     "test": "scripts/test.sh",
     "example:start": "LOG_LEVEL=info PORT=3000 npm start"
   },
-  "overrides": {
-    "@types/eslint": "8.4.3"
-  },
   "devDependencies": {
     "@babel/core": "^7.18.6",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@types/jest": "^28.1.4",
     "@types/node": "^18.0.0",
-    "@types/react": "^16.9.43",
-    "@types/react-dom": "^16.9.8",
-    "@types/restify": "^8.4.2",
+    "@types/react": "^17.0.47",
+    "@types/react-dom": "^18.0.5",
+    "@types/restify": "^8.5.4",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
-    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^28.1.2",
+    "jest-environment-jsdom": "^28.1.2",
     "nodemon": "^2.0.18",
     "react-refresh": "^0.14.0",
     "sass": "^1.53.0",
@@ -44,12 +41,12 @@
     "webpack-hot-middleware": "^2.25.1"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/lab": "^4.0.0-alpha.56",
-    "fontsource-roboto": "^3.0.3",
-    "react": "0.0.0-experimental-4ead6b530",
-    "react-dom": "0.0.0-experimental-4ead6b530",
-    "somnus": "^3.0.1"
+    "@fontsource/roboto": "^4.5.7",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/lab": "^4.0.0-alpha.61",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "somnus": "^8.3.2"
   },
   "jest": {
     "preset": "ts-jest",
@@ -60,9 +57,12 @@
     },
     "globals": {
       "ts-jest": {
-        "tsConfig": "./src/client/tsconfig.json"
+        "tsconfig": "./src/client/tsconfig.json"
       }
-    }
+    },
+    "setupFiles": [
+      "<rootDir>/src/client/setupTests.ts"
+    ]
   },
   "license": "MIT",
   "contributors": [
