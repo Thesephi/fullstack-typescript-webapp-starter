@@ -33,6 +33,7 @@ module.exports = {
   module: {
     rules: [
       {
+        // @TODO check if webpack@5 asset modules can replace all these additional loaders
         test: /\.s[ac]ss$/i,
         use: [
           // Creates `style` nodes from JS strings
@@ -44,7 +45,8 @@ module.exports = {
         ]
       },
       {
-        // These used to be handled by `file-loader` but are now handled by webpack@5 asset modules
+        // These used to be handled by `file-loader` but are now handled by webpack@5 asset modules;
+        // see https://webpack.js.org/guides/asset-modules/
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         type: 'asset/resource',
         generator: {
