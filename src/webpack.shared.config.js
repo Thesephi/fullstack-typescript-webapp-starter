@@ -23,8 +23,9 @@ module.exports = {
 
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
-    // Add '.js' is so that React itself can be compiled (though this is not required during prod).
-    extensions: [".ts", ".tsx", ".js"],
+    // Add '.js' so that React itself can be compiled (though this is not required during prod).
+    // Add '.node' so native modules can be compiled (e.g. `unit-http`).
+    extensions: [".ts", ".tsx", ".js", ".node"],
     alias: {
       shared: path.resolve(__dirname, "shared/")
     }
@@ -48,7 +49,7 @@ module.exports = {
         // These used to be handled by `file-loader` but are now handled by webpack@5 asset modules;
         // see https://webpack.js.org/guides/asset-modules/
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        type: 'asset/resource',
+        type: "asset/resource",
         generator: {
           filename: "fonts/[name].[ext]"
         }
@@ -58,7 +59,12 @@ module.exports = {
         enforce: "pre",
         test: /\.js$/,
         loader: "source-map-loader"
-      }
+      },
+      // enable this if we want to compile .node files (e.g. native modules like `unit-http`)
+      // {
+      //   test: /\.node$/,
+      //   loader: "node-loader"
+      // }
     ]
   },
 
