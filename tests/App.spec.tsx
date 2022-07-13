@@ -29,7 +29,9 @@ describe("App", () => {
   });
 
   afterAll(() => {
-    root.unmount();
+    act(() => {
+      root.unmount();
+    });
     document.body.removeChild(container!);
     container = null;
     window.fetch = defaultFetch;
