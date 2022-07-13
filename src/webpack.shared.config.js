@@ -60,7 +60,7 @@ module.exports = {
         test: /\.js$/,
         loader: "source-map-loader"
       },
-      // enable this if (and install `node-loader` if needed) if we want to compile .node files
+      // enable this (and install `node-loader` as needed) if we want to compile .node files
       // (e.g. when importing node modules with native artifacts, such as `unit-http`)
       // {
       //   test: /\.node$/,
