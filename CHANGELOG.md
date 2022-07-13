@@ -1,3 +1,8 @@
+## [1.4.0] - 2022-07-13
+
+### Changed
+- overall library upgrades (2-year worth of upgrades!)
+
 ## [1.3.0] - 2020-12-13
 
 ### Changed
