@@ -1,11 +1,16 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import "jest";
 import * as React from "react";
 import { act, Simulate } from "react-dom/test-utils";
-import { render, unmountComponentAtNode } from "react-dom";
+import { createRoot, Root } from "react-dom/client";
 import App from "../src/client/App";
 
 describe("App", () => {
 
+  let root: Root;
   let container: HTMLDivElement | null;
 
   let defaultFetch: any = window.fetch;
@@ -16,14 +21,17 @@ describe("App", () => {
   beforeAll(() => {
     container = document.createElement("div");
     document.body.appendChild(container);
+    root = createRoot(container!);
     act(() => {
-        render(<App />, container);
+      root.render(<App />);
     });
     window.fetch = mockFetch as any;
   });
 
   afterAll(() => {
-    unmountComponentAtNode(container!);
+    act(() => {
+      root.unmount();
+    });
     document.body.removeChild(container!);
     container = null;
     window.fetch = defaultFetch;

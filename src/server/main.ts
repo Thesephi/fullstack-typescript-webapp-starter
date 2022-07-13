@@ -1,6 +1,6 @@
 import { Request, Response } from "restify";
 import { outputView, submitEntry, getEntries } from "./helper";
-import somnus, { RouteConfig } from "somnus";
+import somnus, { IRouteConfig } from "somnus";
 import { join } from "path";
 
 async function main(): Promise<void> {
@@ -9,7 +9,7 @@ async function main(): Promise<void> {
 
     somnus.server.use(somnus.restify.plugins.bodyParser());
 
-    let routeConfig: RouteConfig = {
+    let routeConfig: IRouteConfig = {
 
         "get /": (req: Request, res: Response) => outputView(req, res, "./view-templates/index.html"),
 
