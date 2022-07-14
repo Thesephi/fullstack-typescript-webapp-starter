@@ -5,10 +5,10 @@
 This is an opinionated web app boilerplate that makes use of:
 - [React](https://reactjs.org/) on the client-side
 - [Somnus](https://github.com/somnusjs/somnus) on the server-side
-- [TypeScript](typescriptlang.org)
-- and **no** database (*)
+- [TypeScript](https://typescriptlang.org)
+- **no** database (*)
 
-(*) it does come with a simple & stupid mock database client, exposed as raw JavaScript functions, which you can replace with your database integration of choice (NoSQL, SQL, Graph, whatever floating your boat)
+(*) it does come with a simple & stupid mock database client, exposed as simple JavaScript functions, which you can replace with your database integration of choice (NoSQL, SQL, Graph, whatever floating your boat)
 
 Also, there is **no** session management, OAuth, user management, or anything beyond basic, stateless REST endpoint routing and React views. If you are looking for a one-size-fits-all or a full-feature starter pack, this boilerplate is **not** for you.
 
@@ -18,7 +18,7 @@ Also, there is **no** session management, OAuth, user management, or anything be
 - Thanks to its minimalistic nature, it can be used as a core of a (traditional) monolithic app, or easily containerized & deployed as a microservice running in your architecture of choice (Docker Swarm, Kubernetes, etc.)
 - It is deploy-ready out-of-the-box e.g. on Heroku, and is especially suitable to create quick prototypes that are immediately shareable with the world
 
-## Why not this boilerplate
+## Why **not** this boilerplate
 
 - If you wish to avoid React in your stack
 - If you prefer the fuller-feature ExpressJS on the server-side
@@ -34,11 +34,11 @@ Changes to the client-side or server-side code will be picked up automatically
 
 ## How to generate the production build
 
-```javascript
+```bash
 NODE_ENV=production npm run build
 ```
 
-When the script finishes, the server app should be available at `build/server/main.js`, which can be ran with `node` itself, or your process manager of choice (e.g. `pm2`)
+When the script finishes, the server app should be available at `build/server/main.js`, which can be ran with `node` itself, or a Node.js-supported app-server / process-manager of choice (e.g. `pm2`, NGINX Unit, etc.)
 
 ## How to test
 
@@ -54,7 +54,6 @@ npm test
 ## Caveats / TODOs
 
 - Source mapping doesn't work yet for the server app, and thus JS error logs are not pointing to the desirable line/column in the .ts files
-- The build is not yet optimized (output sizes larger than they could be in real production setups)
+- The build is not yet optimized (output sizes larger than they could be in real production setups) ([#9](https://github.com/Thesephi/fullstack-typescript-webapp-starter/issues/9))
 - There is no example test suite yet for the backend part (REST endpoints)
 - The dev flow (`npm run dev`) has not been tested on platforms other than MacOS
-- `npm run dev` still errors on (Ctrl+C) terminated (whereas it should not do so)
