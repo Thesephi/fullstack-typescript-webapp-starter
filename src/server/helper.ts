@@ -59,7 +59,7 @@ export async function submitEntry(req: Request, res: Response): Promise<void> {
     // if (isNaN(eventDate)) errors.push("invalid `eventDate`");
     if (errors.length) {
         const respBody: IRespPayload = { message: `Invalid entry submitted`, details: { errors } };
-        return res.send(403, respBody);
+        return res.send(400, respBody);
     }
 
     const col = await getDbCollection(COLLECTION_NAME);
