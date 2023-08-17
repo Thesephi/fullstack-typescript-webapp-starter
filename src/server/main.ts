@@ -1,5 +1,5 @@
 import { Request, Response } from "restify";
-import { outputView, submitEntry, getEntries } from "./helper";
+import { outputView, submitEntry, getEntry, getEntries } from "./helper";
 import somnus, { IRouteConfig } from "somnus";
 import { join } from "path";
 
@@ -7,7 +7,8 @@ async function main(): Promise<void> {
 
     process.chdir(__dirname);
 
-    somnus.server.use(somnus.restify.plugins.bodyParser());
+    // @NOTE if we use `somnus`, there's no need to declare bodyParser & queryParser
+    // as they're already bundled into somnus server object
 
     let routeConfig: IRouteConfig = {
 
@@ -15,6 +16,8 @@ async function main(): Promise<void> {
 
         "post /entry": submitEntry,
         "get /entries": getEntries,
+        "get /entry": getEntry,
+        "get /entry/:id": getEntry,
 
         // in real production, these should be intercepted & handled by a reverse proxy / CDN instead
         "get /js/*": somnus.restify.plugins.serveStatic({ directory: "../public" }),

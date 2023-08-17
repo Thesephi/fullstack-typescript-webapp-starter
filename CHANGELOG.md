@@ -1,3 +1,15 @@
+## [1.4.1] - 2023-08-18
+
+### Fixed
+- fixed `req.url` in Dev Mode, so requests like `/foo?bar=baz` are properly parsed
+
+### Added
+- webpack aliases for modules in `client/` and `server/`
+- 2 more endpoints to demonstrate the boilerplate's ability to handle various flavours of standard REST endpoints
+
+### Removed
+- declaration of the plugin `bodyParser` as it's already bundled within (the opinionated) `somnus`
+
 ## [1.4.0] - 2022-07-13
 
 ### Changed

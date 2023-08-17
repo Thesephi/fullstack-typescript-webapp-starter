@@ -1,6 +1,6 @@
 {
   "name": "fullstack-typescript-webapp-starter",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A db-agnostic, React-based web application starter boilerplate",
   "scripts": {
     "build-prod": "scripts/build-prod.sh",

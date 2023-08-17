@@ -30,9 +30,12 @@ async function initWebpackDevMiddleware(app: restify.Server) {
   app.pre(
     (req, res, next) => {
       const thePath = req.getPath();
-      console.log("somnus: custom whm handling", thePath);
+      const theBareQuery = req.getQuery();
+      const theQuery = theBareQuery ? `?${theBareQuery}` : "";
+      const theUrl = thePath + theQuery;
+      console.log("somnus wdmwhm: handling", theUrl);
       // fix a webpack-hot-middleware - restify incompatibility
-      req.url = thePath;
+      req.url = theUrl;
       return next();
     },
     require("webpack-hot-middleware")(compiler, {

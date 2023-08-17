@@ -27,7 +27,9 @@ module.exports = {
     // Add '.node' so native modules can be compiled (e.g. `unit-http`).
     extensions: [".ts", ".tsx", ".js", ".node"],
     alias: {
-      shared: path.resolve(__dirname, "shared/")
+      shared: path.resolve(__dirname, "shared/"),
+      client: path.resolve(__dirname, "client/"),
+      server: path.resolve(__dirname, "server/"),
     }
   },
 
