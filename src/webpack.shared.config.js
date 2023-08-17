@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 const mode = isDevelopment ? "development" : "production";
@@ -25,26 +26,16 @@ module.exports = {
     // Add '.ts' and '.tsx' as resolvable extensions.
     // Add '.js' so that React itself can be compiled (though this is not required during prod).
     // Add '.node' so native modules can be compiled (e.g. `unit-http`).
-    extensions: [".ts", ".tsx", ".js", ".node"],
+    extensions: [".ts", ".tsx", ".js", ".node", ".scss"],
     alias: {
-      shared: path.resolve(__dirname, "shared/")
+      shared: path.resolve(__dirname, "shared/"),
+      client: path.resolve(__dirname, "client/"),
+      server: path.resolve(__dirname, "server/"),
     }
   },
 
   module: {
     rules: [
-      {
-        // @TODO check if webpack@5 asset modules can replace all these additional loaders
-        test: /\.s[ac]ss$/i,
-        use: [
-          // Creates `style` nodes from JS strings
-          "style-loader",
-          // Translates CSS into CommonJS
-          "css-loader",
-          // Compiles Sass to CSS
-          "sass-loader"
-        ]
-      },
       {
         // These used to be handled by `file-loader` but are now handled by webpack@5 asset modules;
         // see https://webpack.js.org/guides/asset-modules/
@@ -60,6 +51,34 @@ module.exports = {
         test: /\.js$/,
         loader: "source-map-loader"
       },
+      {
+        // @TODO check if webpack@5 asset modules can replace all these additional loaders
+        test: /\.s[ac]ss$/i,
+        use: [
+          // @NOTE NEVER use both `style-loader` and `MiniCssExtractPlugin` together
+          // isDevelopment
+          //   ?
+          //     // Creates `style` nodes from JS strings
+          //     {
+          //       loader: "style-loader",
+          //       options: {
+          //         // this is so that it doesn't clash with React 18 SSR hydrating full-node
+          //         // as discussed here: https://github.com/facebook/react/issues/24430#issuecomment-1440427646
+          //         // @TODO consider removing this config once React solved this issue
+          //         insert: "body"
+          //       }
+          //     }
+          //   :
+              // strip CSS from output bundle
+              MiniCssExtractPlugin.loader,
+
+          // Translates CSS into CommonJS
+          "css-loader",
+
+          // Compiles Sass to CSS
+          "sass-loader"
+        ]
+      },
       // enable this (and install `node-loader` as needed) if we want to compile .node files
       // (e.g. when importing node modules with native artifacts, such as `unit-http`)
       // {
@@ -72,7 +91,15 @@ module.exports = {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: mode
-    })
+    }),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // all options are optional
+      filename: "css/[name].css",
+      chunkFilename: "css/[id].css",
+      // Enable to remove warnings about conflicting order
+      // ignoreOrder: false,
+    }),
   ]
 
 };

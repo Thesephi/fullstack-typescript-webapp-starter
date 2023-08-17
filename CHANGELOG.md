@@ -1,3 +1,24 @@
+## [2.0.0] - 2023-xx-xx
+
+### Known issues
+- `npm run dev`:
+    - needs implementation: dynamically adding assets (e.g. css) into components without causing React 18 hydration errors
+    - `localhost:4000/__webpack_hmr` gets 406 unhandleRestifyError
+    - sometimes the process crashes with "Socket Hang Up", and then works fine the next time we start it up
+- `npm run prod`: shared/domains/ExampleReactComponent/styles.scss does not get picked up by the build process (to be verified)
+
+### Changed
+- fixed `req.url` in Dev Mode
+- indentation in several files to make it consistent throughout the codebase
+- `src/server/main.ts` no longer acts as the webpack dev server
+
+### Added
+- an example path serving SSR React component via streaming (`react-dom/server::renderToPipeableStream`)
+- the script `scripts/startDevServer.ts` that runs webpack-dev-middleware for both server-side and client-side assets
+
+### TODO
+- why Ctrl+C sometimes doesn't work unless we close & re-open Chrome tab?
+
 ## [1.4.0] - 2022-07-13
 
 ### Changed

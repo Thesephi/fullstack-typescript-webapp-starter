@@ -10,4 +10,8 @@ if [ -z $EFFECTIVE_PORT ]; then
     EFFECTIVE_PORT=3000
 fi
 
-PORT=$EFFECTIVE_PORT nodemon
+# old flow, using nodemon & ts-node directly, but is NOT compatible with SSR + SCSS importing by default
+# PORT=$EFFECTIVE_PORT nodemon
+
+# new, experimental flow, hopefully supporting all use cases
+PORT=$EFFECTIVE_PORT ts-node -T scripts/startDevServer.ts

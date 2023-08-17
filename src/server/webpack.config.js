@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const sharedConfig = require("../webpack.shared.config.js"); // do not use `path.resolve` here
 
 const isDevelopment = sharedConfig.mode !== "production";
@@ -33,6 +34,21 @@ module.exports = {
     ...sharedConfig.module,
     rules: [
       ...sharedConfig.module.rules,
+      // {
+      //   // @TODO check if webpack@5 asset modules can replace all these additional loaders
+      //   test: /\.s[ac]ss$/i,
+      //   use: [
+      //     // strip CSS from output bundle, a MUST HAVE to deal with SSR
+      //     // where the React component imports .scss files
+      //     MiniCssExtractPlugin.loader,
+
+      //     // Translates CSS into CommonJS
+      //     "css-loader",
+
+      //     // Compiles Sass to CSS
+      //     "sass-loader"
+      //   ]
+      // },
       {
         test: /\.ts(x?)$/,
         exclude: [
@@ -50,7 +66,16 @@ module.exports = {
     new webpack.DefinePlugin({ "global.GENTLY": false }),
     new webpack.EnvironmentPlugin({
       BUILD_SIGNATURE: process.env.BUILD_SIGNATURE
-    })
+    }),
+    // // this is here (instead of `webpack.shared.config`) because of the way we include & configure it
+    // new MiniCssExtractPlugin({
+    //   // Options similar to the same options in webpackOptions.output
+    //   // all options are optional
+    //   filename: "css/[name].css",
+    //   chunkFilename: "css/[id].css",
+    //   // Enable to remove warnings about conflicting order
+    //   // ignoreOrder: false,
+    // }),
   ]
 
 };

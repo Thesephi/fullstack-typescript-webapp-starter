@@ -26,9 +26,11 @@ Also, there is **no** session management, OAuth, user management, or anything be
 
 ## How to start the dev mode
 
-1. clone this project and `cd` into the project root directory
-2. run `npm install` (it'll take a while to download all frontend & backend libraries & DevTools)
-3. run `npm run dev` then follow the pointer from the console log
+1. ensure development prerequisites are installed:
+  - realpath (e.g. with `brew install coreutils` on a Mac)
+2. clone this project and `cd` into the project root directory
+3. run `npm ci` (it'll take a while to download all frontend & backend libraries & DevTools)
+4. run `npm run dev` then follow the pointer from the console log
 
 Changes to the client-side or server-side code will be picked up automatically
 

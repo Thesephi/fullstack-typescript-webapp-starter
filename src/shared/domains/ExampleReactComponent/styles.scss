@@ -1,0 +1,30 @@
+/**
+ * ts-node alone cannot seem to be able to load & parse this file properly
+ * so the solution is webpack
+ */
+
+// Colors
+$bg-color: hsl(256,33%,10%);
+$dot-color: hsl(256,33%,70%);
+
+// Dimensions
+$dot-size: 1px;
+$dot-space: 22px;
+
+* {
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+#example-container {
+  background:
+		linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
+		linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
+		$dot-color;
+	background-size: $dot-space $dot-space;
+}
