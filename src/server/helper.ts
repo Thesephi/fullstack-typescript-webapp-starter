@@ -74,6 +74,23 @@ export async function submitEntry(req: Request, res: Response): Promise<void> {
 
 }
 
+export async function getEntry(req: Request, res: Response): Promise<void> {
+    const meta = {
+        reqUrl: req.url,
+        reqPath: req.getPath(),
+        reqQuery: req.query,
+        reqParams: req.params,
+    }
+    const id = req.params?.id;
+    if (!id) return res.send(400, { message: `missing request query 'id'`, meta });
+    const col = await getDbCollection(COLLECTION_NAME);
+    const allEntries = await col.find().toArray();
+    return res.send({
+        data: allEntries[id],
+        meta
+    });
+}
+
 export async function getEntries(req: Request, res: Response): Promise<void> {
 
     const col = await getDbCollection(COLLECTION_NAME);
